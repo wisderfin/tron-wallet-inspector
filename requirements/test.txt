@@ -1,0 +1,12 @@
+sqlalchemy
+asyncpg
+alembic
+
+pydantic
+pydantic-settings
+
+tronpy
+
+requests
+pytest
+pytest-asyncio
