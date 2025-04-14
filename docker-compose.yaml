@@ -8,6 +8,8 @@ services:
       DATABASE_HOST: ${DATABASE_HOST}
     volumes:
       - postgres-storage:/var/lib/postgresql/data
+    ports:
+      - ${DATABASE_PORT}:${DATABASE_PORT}
     healthcheck:
       test: sh -c "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME} -h ${DATABASE_HOST} -p ${DATABASE_PORT}"
       start_period: 3s
@@ -25,7 +27,7 @@ services:
       sh -c "python -B -m alembic upgrade head"
     volumes:
       - ./settings.py:/migrations/settings.py
-      - ./models.py:/migrations/models.py
+      - ./app/models.py:/migrations/app/models.py
       - ./migrations/env.py:/migrations/env.py
       - ./migrations/versions:/migrations/versions
       - ./migrations/script.py.mako:/migrations/script.py.mako
@@ -37,6 +39,18 @@ services:
     working_dir: /migrations
     restart: on-failure
 
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    command:
+      sh -c "python -B app/main.py"
+    ports:
+      - ${API_PORT}:${API_PORT}
+    depends_on:
+      - migration
+    restart: on-failure
 
 volumes:
     postgres-storage:

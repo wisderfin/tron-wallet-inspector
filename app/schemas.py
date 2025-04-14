@@ -6,7 +6,6 @@ class WalletCreate(BaseModel):
 
 
 class WalletResponse(BaseModel):
-    id: int
     address: str
     balance: str
     energy: str

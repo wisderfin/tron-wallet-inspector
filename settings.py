@@ -10,6 +10,11 @@ class Settings(BaseSettings):
     DATABASE_PORT: int
     DATABASE_HOST: str
 
+    API_PORT: int
+    API_HOST: str
+
+    TRONGRID_API_KEY: str
+
     class Config:
         env_file = ".env"
         extra = "ignore"

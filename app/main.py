@@ -1,7 +1,8 @@
-from fastapi import FastAPI, Depends
-from .schemas import WalletCreate
-from app.tron_client import get_wallet_info
-from app.crud import create_wallet, get_wallets
+from fastapi import FastAPI
+from schemas import WalletCreate
+from tron_client import get_wallet_info
+from crud import create_wallet, get_wallets
+from settings import settings
 
 app = FastAPI()
 
@@ -18,4 +19,4 @@ async def get(skip: int = 0, limit: int = 25):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run('main:app', host='0.0.0.0', port='8000', reload=True)
+    uvicorn.run('main:app', host=settings.API_HOST, port=settings.API_PORT, reload=True)
