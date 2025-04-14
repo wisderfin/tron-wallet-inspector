@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_NAME}
+      DATABASE_HOST: ${DATABASE_HOST}
+    volumes:
+      - postgres-storage:/var/lib/postgresql/data
+    healthcheck:
+      test: sh -c "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME} -h ${DATABASE_HOST} -p ${DATABASE_PORT}"
+      start_period: 3s
+      interval: 3s
+      timeout: 1s
+      retries: 5
+    restart: always
+
+  migration:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: migrations
+    command:
+      sh -c "python -B -m alembic upgrade head"
+    volumes:
+      - ./settings.py:/migrations/settings.py
+      - ./models.py:/migrations/models.py
+      - ./migrations/env.py:/migrations/env.py
+      - ./migrations/versions:/migrations/versions
+      - ./migrations/script.py.mako:/migrations/script.py.mako
+      - ./.env:/migrations/.env
+      - ./alembic.ini:/migrations/alembic.ini
+    depends_on:
+      postgres:
+        condition: service_healthy
+    working_dir: /migrations
+    restart: on-failure
+
+
+volumes:
+    postgres-storage:
