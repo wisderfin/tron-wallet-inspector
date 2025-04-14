@@ -5,7 +5,7 @@ from logging.config import fileConfig
 from alembic import context
 
 
-from models import *
+from app.models import *
 from settings import settings
 
 config = context.config
