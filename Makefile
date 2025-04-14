@@ -3,13 +3,7 @@ export $(shell sed -E '/^\s*#/d;/^\s*$$/d;s/=.*//' .env)
 
 # standart commands for docker-compose managment
 up:
-	docker-compose up --remove-orphans
-upd:
-	docker-compose up --remove-orphans -d
-upb:
 	docker-compose up --remove-orphans --build
-upbd:
-	docker-compose up --remove-orphans --build -d
 stop:
 	docker-compose stop
 down:
@@ -17,6 +11,8 @@ down:
 logs:
 	docker-compose logs -f
 
+test:
+	docker-compose run test
 
 # comands for migration-container
 msg?=
