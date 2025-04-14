@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import List
 
 
 class WalletCreate(BaseModel):
@@ -16,4 +15,3 @@ class WalletResponse(BaseModel):
 
     class Config:
         orm_mode: True
-        
