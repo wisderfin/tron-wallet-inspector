@@ -52,5 +52,16 @@ services:
       - migration
     restart: on-failure
 
+  test:
+      build:
+        context: .
+        dockerfile: Dockerfile
+        target: test
+      depends_on:
+        - migration
+        - postgres
+        - api
+      restart: "on-failure"
+
 volumes:
     postgres-storage:

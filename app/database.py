@@ -6,10 +6,10 @@ from settings import settings
 
 
 engine = create_async_engine(
-    f"{settings.DATABASE_DRIVER}://"
-    f"{settings.DATABASE_USER}:{settings.DATABASE_PASSWORD}@"
-    f"{settings.DATABASE_HOST}:{settings.DATABASE_PORT}/"
-    f"{settings.DATABASE_NAME}"
+    f'{settings.DATABASE_DRIVER}://'
+    f'{settings.DATABASE_USER}:{settings.DATABASE_PASSWORD}@'
+    f'{settings.DATABASE_HOST}:{settings.DATABASE_PORT}/'
+    f'{settings.DATABASE_NAME}'
 )
 async_session_maker = async_sessionmaker(bind=engine, expire_on_commit=False)
 
@@ -19,16 +19,16 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
         yield session
 
 
-T = TypeVar("T", bound=Callable[..., Coroutine[Any, Any, Any]])  # for save annotations
+T = TypeVar('T', bound=Callable[..., Coroutine[Any, Any, Any]])  # for save annotations
 
 
 def with_session(func: T) -> T:
     @wraps(func)
     async def wrapper(*args, **kwargs):
-        session: AsyncSession = kwargs.get("session")
+        session: AsyncSession = kwargs.get('session')
         if session is None:
             async with async_session_maker() as session:
-                kwargs["session"] = session
+                kwargs['session'] = session
                 return await func(*args, **kwargs)
         else:
             return await func(*args, **kwargs)

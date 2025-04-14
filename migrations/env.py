@@ -11,14 +11,14 @@ from settings import settings
 config = context.config
 
 section = config.config_ini_section
-config.set_section_option(section, "DATABASE_HOST", settings.DATABASE_HOST)
+config.set_section_option(section, 'DATABASE_HOST', settings.DATABASE_HOST)
 config.set_section_option(
-    section, "DATABASE_PORT", str(settings.DATABASE_PORT)
+    section, 'DATABASE_PORT', str(settings.DATABASE_PORT)
 )
-config.set_section_option(section, "DATABASE_NAME", settings.DATABASE_NAME)
-config.set_section_option(section, "DATABASE_USER", settings.DATABASE_USER)
-config.set_section_option(section, "DATABASE_PASSWORD", settings.DATABASE_PASSWORD)
-config.set_section_option(section, "DATABASE_DRIVER", settings.DATABASE_DRIVER)
+config.set_section_option(section, 'DATABASE_NAME', settings.DATABASE_NAME)
+config.set_section_option(section, 'DATABASE_USER', settings.DATABASE_USER)
+config.set_section_option(section, 'DATABASE_PASSWORD', settings.DATABASE_PASSWORD)
+config.set_section_option(section, 'DATABASE_DRIVER', settings.DATABASE_DRIVER)
 
 
 fileConfig(config.config_file_name)
@@ -26,12 +26,12 @@ target_metadata = Base.metadata
 
 
 def run_migrations_offline():
-    url = config.get_main_option("sqlalchemy.url")
+    url = config.get_main_option('sqlalchemy.url')
     context.configure(
         url=url,
         target_metadata=target_metadata,
         literal_binds=True,
-        dialect_opts={"paramstyle": "named"},
+        dialect_opts={'paramstyle': 'named'},
     )
 
     with context.begin_transaction():
@@ -49,7 +49,7 @@ async def run_migrations_online():
     connectable = AsyncEngine(
         engine_from_config(
             config.get_section(config.config_ini_section),
-            prefix="sqlalchemy.",
+            prefix='sqlalchemy.',
             poolclass=pool.NullPool,
             future=True,
         )

@@ -11,7 +11,7 @@ async def get_wallet_info(address: str) -> dict:
     resource = client.get_account_resource(address)
 
     return {
-        'balance': f"{float(account.get('balance', 0)) / 1000000:.10f}",
+        'balance': f'{float(account.get("balance", 0)) / 1000000:.10f}',
         'energy': str(resource.get('TotalEnergyLimit', 0) - resource.get('TotalEnergyWeight', 0)),
         'bandwidth': str(resource.get('freeNetLimit', 0) - resource.get('freeNetUsed', 0))
     }

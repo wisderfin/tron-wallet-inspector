@@ -16,8 +16,8 @@ class Settings(BaseSettings):
     TRONGRID_API_KEY: str
 
     class Config:
-        env_file = ".env"
-        extra = "ignore"
+        env_file = '.env'
+        extra = 'ignore'
 
 
 settings = Settings()
