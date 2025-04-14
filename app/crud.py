@@ -5,8 +5,9 @@ from models import WalletModel
 from schemas import WalletResponse
 from database import with_session
 
+
 @with_session
-async def create_wallet(address: str, data: dict, session: AsyncSession) -> WalletResponse:
+async def create_wallet(address: str, data: dict, session: AsyncSession) -> WalletModel:
     stmt = select(WalletModel).where(WalletModel.address == address)
     result = await session.execute(stmt)
     wallet = result.scalar_one_or_none()
@@ -30,7 +31,7 @@ async def create_wallet(address: str, data: dict, session: AsyncSession) -> Wall
 
 
 @with_session
-async def get_wallets(skip: int = 0, limit: int = 25, session: AsyncSession = None):
+async def get_wallets(skip: int = 0, limit: int = 25, session: AsyncSession = None) -> list[WalletModel]:
     result = await session.execute(
         select(WalletModel).order_by(desc(WalletModel.timestamp)).offset(skip).limit(limit)
     )

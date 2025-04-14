@@ -2,6 +2,7 @@ import requests
 from time import sleep
 from settings import settings
 
+
 def test_post_and_get_wallet_info():
     sleep(5)
     wallet_data = {'address': 'THyaBXgRJpBGYdeGpdVktXDmqEmDgY2vMV'} # адрес валиден

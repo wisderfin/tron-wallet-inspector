@@ -2,8 +2,10 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, DateTime, func
 from datetime import datetime
 
+
 class Base(DeclarativeBase):
     pass
+
 
 class WalletModel(Base):
     __tablename__ = 'wallets'

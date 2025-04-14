@@ -1,7 +1,6 @@
 from functools import wraps
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from typing import Any, AsyncGenerator, Callable, Coroutine, TypeVar
-
 from settings import settings
 
 
@@ -11,6 +10,7 @@ engine = create_async_engine(
     f'{settings.DATABASE_HOST}:{settings.DATABASE_PORT}/'
     f'{settings.DATABASE_NAME}'
 )
+
 async_session_maker = async_sessionmaker(bind=engine, expire_on_commit=False)
 
 
@@ -19,7 +19,7 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
         yield session
 
 
-T = TypeVar('T', bound=Callable[..., Coroutine[Any, Any, Any]])  # for save annotations
+T = TypeVar('T', bound=Callable[..., Coroutine[Any, Any, Any]])
 
 
 def with_session(func: T) -> T:

@@ -1,10 +1,12 @@
 from tronpy import Tron, providers
 from settings import settings
 
+
 provider = providers.HTTPProvider(
     api_key=settings.TRONGRID_API_KEY
 )
 client = Tron(provider=provider)
+
 
 async def get_wallet_info(address: str) -> dict:
     account = client.get_account(address)
