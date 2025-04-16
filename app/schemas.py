@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from datetime import datetime
 
 class WalletCreate(BaseModel):
     address: str
@@ -10,7 +10,7 @@ class WalletResponse(BaseModel):
     balance: str
     energy: str
     bandwidth: str
-    timestamp: str
+    timestamp: datetime
 
     class Config:
         orm_mode: True
